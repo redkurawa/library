@@ -36,3 +36,21 @@ export type BookResponse = {
     books: Book[];
   };
 };
+
+// export type Book = {
+//   id: number;
+//   title: string;
+//   description?: string | null;
+//   isbn: string;
+//   publishedYear?: number | null;
+//   coverImage?: string | null;
+//   rating: number;
+//   reviewCount: number;
+//   totalCopies: number;
+//   availableCopies: number;
+//   borrowCount: number;
+//   authorId: number;
+//   categoryId: number;
+//   createdAt: string; // ISO 8601 date-time string, e.g., "2023-10-05T14:30:00Z"
+//   updatedAt: string; // ISO 8601 date-time string, e.g., "2023-10-05T14:30:00Z"
+// };

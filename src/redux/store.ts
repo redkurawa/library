@@ -1,15 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth-slice';
-// import menuReducer from './menu-slice';
-// import cartReducer from './cart-slice';
-// import restoReduce from './resto-slice';
+import { booksReducer } from './book-slice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    // menus: menuReducer,
-    // cart: cartReducer,
-    // resto: restoReduce,
+    book: booksReducer,
   },
 });
 

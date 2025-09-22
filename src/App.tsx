@@ -9,6 +9,7 @@ function App() {
       <div className='mx-auto max-w-[1440px] border'>
         <Routes>
           <Route path='/' element={<Home />} />
+          {/* <Route path='/' element={<BookList />} /> */}
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Routes>
