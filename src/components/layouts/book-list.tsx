@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '@/redux/store';
 // Import thunk.
 import { getBooks } from '@/redux/book-slice';
+import { Link } from 'react-router';
+import { BookCard } from './book-card';
 // Import Book type.
 // import type { Book } from '../types/book';
 
@@ -23,8 +25,8 @@ const BookList: React.FC = () => {
   const { books, loading, error } = useSelector(
     (state: RootState) => state.book
   );
-
   // console.log('isi books :', books);
+
   // Local state for pagination.
   // 'const [currentPage, setCurrentPage] = useState(1);' - Starts at page 1.
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,33 +64,9 @@ const BookList: React.FC = () => {
       <h1 className='mb-5 text-2xl font-bold md:text-[36px]'>Recommendation</h1>
       <div className='grid grid-cols-2 gap-5 md:grid-cols-5'>
         {currentBooks.map((book) => (
-          <div key={book.id} className='shadow-all rounded-t-[12px]'>
-            <div className='mb-5 h-[258px] md:h-[336px]'>
-              {book.coverImage &&
-              typeof book.coverImage === 'string' &&
-              book.coverImage.trim() !== '' ? (
-                <img
-                  src={book.coverImage}
-                  alt={book.title}
-                  className='rounded-t-[12px]'
-                />
-              ) : (
-                <div className='gray-placeholder rounded-t-2xl'></div>
-              )}
-            </div>
-            <div className='p-3'>
-              <p className='text-sm font-bold md:text-lg'>{book.title} </p>
-              <p className='md:text-md text-sm font-medium'>
-                {book.author.name}{' '}
-              </p>
-              <div className='flex items-center gap-1'>
-                <img src='/icons/star.svg' alt='star' />
-                <p className='md:text-md text-sm font-semibold'>
-                  {book.rating}{' '}
-                </p>
-              </div>
-            </div>
-          </div>
+          <Link key={book.id} to={`books/${book.id}`}>
+            <BookCard book={book} />
+          </Link>
         ))}
       </div>
       <div>

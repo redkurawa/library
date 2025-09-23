@@ -1,15 +1,7 @@
 import { getBooks } from '@/redux/book-slice';
 import type { AppDispatch, RootState } from '@/redux/store';
 import type { Book } from '@/types/books';
-import {
-  CircleUserRound,
-  CircleUserRoundIcon,
-  LucideCircleUserRound,
-  User,
-  User2,
-  User2Icon,
-  UserIcon,
-} from 'lucide-react';
+import { LucideCircleUserRound } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
