@@ -1,6 +1,7 @@
 import { getBooks } from '@/redux/book-slice';
 import type { AppDispatch, RootState } from '@/redux/store';
 import type { Book } from '@/types/books';
+import { Capitalize } from '@/utils/capitalize';
 import { LucideCircleUserRound } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,7 +54,7 @@ const BookList: React.FC = () => {
             <div className='flex items-center gap-4'>
               <LucideCircleUserRound className='ball size-18' />
               <div>
-                <p className='text-lg font-bold'>{author.name}</p>
+                <p className='text-lg font-bold'>{Capitalize(author.name)}</p>
                 <div className='text-md flex items-center font-medium'>
                   <img src='/icons/book.svg' alt='book' />
                   {author.count} {author.count == 1 ? 'book' : 'books'}
