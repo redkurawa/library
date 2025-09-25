@@ -5,6 +5,7 @@ import { Home } from './components/pages/home';
 import Login from './components/pages/login';
 import Register from './components/pages/register';
 import { Admin } from './components/pages/admin-page';
+import { Toaster } from './components/ui/sonner';
 
 function App() {
   return (
@@ -18,6 +19,11 @@ function App() {
           <Route path='/category' element={<BookStar />} />
           <Route path='/admin' element={<Admin />} />
         </Routes>
+        <Toaster
+          position='top-center' // ⬅️ posisi toast di tengah atas
+          richColors // ⬅️ aktifkan warna default seperti hijau/oranye
+          // closeButton // ⬅️ opsional: tombol tutup
+        />
       </div>
     </>
   );

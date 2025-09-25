@@ -1,10 +1,8 @@
 import { useAppSelector } from '@/redux/hooks';
-import type { User } from '@/types/user';
-import { useEffect, useState } from 'react';
+import { Menu } from 'lucide-react';
 import { Link } from 'react-router';
 import { Button } from '../ui/button';
 import { Logo } from '../ui/logo';
-import { Menu } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -15,14 +13,14 @@ import {
 } from '../ui/sheet';
 
 export const Header = () => {
-  const [userLogin, setUserLogin] = useState<User | null>();
+  // const [userLogin, setUserLogin] = useState<User | null>();
   const { user, token } = useAppSelector((state) => state.auth);
-  useEffect(() => {
-    if (user) {
-      setUserLogin(user);
-    }
-  }, [user]);
-  console.log(userLogin?.id);
+  // useEffect(() => {
+  //   if (user) {
+  //     setUserLogin(user);
+  //   }
+  // }, [user]);
+  // console.log(userLogin?.id);
 
   return (
     <div className='h-20 border-b'>

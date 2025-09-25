@@ -1,17 +1,22 @@
+import { addCart } from '@/redux/cart-slice';
+import { useAppSelector } from '@/redux/hooks';
+import type { AppDispatch } from '@/redux/store';
 import { GetService } from '@/services/service';
 import type { Book } from '@/types/detail-book';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
-import { Header } from '../layouts/header';
-import { Button } from '../ui/button';
-import dayjs from 'dayjs';
-import { StarRated } from '../ui/star-rating';
 import { Capitalize } from '@/utils/capitalize';
-import { useAppSelector } from '@/redux/hooks';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+import { toast } from 'sonner';
 import { BookCard } from '../layouts/book-card';
 import { Footer } from '../layouts/footer';
+import { Header } from '../layouts/header';
+import { Button } from '../ui/button';
+import { StarRated } from '../ui/star-rating';
 
 export const BookDetail = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams<{ id: string }>();
   const [detail, setDetail] = useState<Book | null>(null);
   const url = `books/${id}`;
@@ -21,7 +26,7 @@ export const BookDetail = () => {
       try {
         const r = await GetService(url);
         const bookData: Book = r.data;
-        console.log('Data received:', bookData);
+        // console.log('Data received:', bookData);
         setDetail(bookData);
       } catch (err) {}
     };
@@ -32,7 +37,37 @@ export const BookDetail = () => {
   const relatedBook = books.filter(
     (book) => book.category.name === detail?.category.name
   );
-  console.log({ relatedBook });
+  // console.log({ relatedBook });
+
+  const cartItems = useAppSelector((state) => state.cart);
+  console.log(cartItems);
+
+  const handleClick = () => {
+    if (
+      !detail?.id ||
+      !detail?.title ||
+      !detail?.author?.name ||
+      !detail?.category?.name
+    )
+      return;
+    const isExist = cartItems.some((item) => item.idBook === detail?.id);
+
+    if (isExist) {
+      toast.warning('Buku sudah ada di keranjang');
+      return;
+    }
+
+    dispatch(
+      addCart({
+        idBook: detail?.id,
+        title: detail?.title,
+        author: detail?.author?.name,
+        category: detail?.category?.name,
+      })
+    );
+
+    toast.success('Buku berhasil ditambahkan ke keranjang');
+  };
 
   return (
     <>
@@ -76,7 +111,7 @@ export const BookDetail = () => {
             </p>
           </div>
           <div className='mt-5 flex gap-3'>
-            <Button variant={'outline'} size={'md'}>
+            <Button variant={'outline'} size={'md'} onClick={handleClick}>
               Add to cart
             </Button>
             <Button variant={'secondary'} size={'md'}>
@@ -95,7 +130,7 @@ export const BookDetail = () => {
         <div className='grid grid-cols-5 gap-5'>
           {relatedBook.map((book) => (
             <>
-              <BookCard book={book} />
+              <BookCard key={book.id} book={book} />
             </>
           ))}
         </div>
