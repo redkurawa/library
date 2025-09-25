@@ -1,33 +1,91 @@
+import { useAppSelector } from '@/redux/hooks';
+import type { User } from '@/types/user';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { Button } from '../ui/button';
 import { Logo } from '../ui/logo';
+import { Menu } from 'lucide-react';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '../ui/sheet';
 
 export const Header = () => {
+  const [userLogin, setUserLogin] = useState<User | null>();
+  const { user, token } = useAppSelector((state) => state.auth);
+  useEffect(() => {
+    if (user) {
+      setUserLogin(user);
+    }
+  }, [user]);
+  console.log(userLogin?.id);
+
   return (
     <div className='h-20 border-b'>
-      <div className='sm-container flex h-20 items-center justify-between'>
+      <div className='sm-container flex h-20 items-center justify-between px-1 md:px-0'>
         <div className='flex items-center gap-4'>
           <Logo className='text-primary-300' />
           <h1 className='text-[32px] font-extrabold'>Booky</h1>
         </div>
-        <div>
-          <div className='text-md hidden items-center gap-4 md:flex'>
-            <Button
-              className='cursor-pointer text-neutral-950 hover:border-0 hover:bg-neutral-200/40 hover:text-black'
-              variant={'outline'}
-              size={'md'}
-            >
-              <Link to='/login'>Login</Link>
-            </Button>
-            <Button
-              className='cursor-pointer hover:bg-neutral-200/30 hover:text-white'
-              variant={'secondary'}
-              size={'md'}
-            >
-              <Link to='/register'>Register</Link>
-            </Button>
+        {token ? (
+          <div className='flex items-center gap-3'>
+            <img src='/icons/face.png' alt='' />
+            {user?.name}
           </div>
-        </div>
+        ) : (
+          <>
+            <div className='text-md hidden items-center gap-4 md:flex'>
+              <Button
+                className='cursor-pointer'
+                variant={'outline'}
+                size={'md'}
+              >
+                <Link to='/login'>Login</Link>
+              </Button>
+              <Button
+                className='cursor-pointer hover:bg-neutral-200/30'
+                variant={'secondary'}
+                size={'md'}
+              >
+                <Link to='/register'>Register</Link>
+              </Button>
+            </div>
+            <div className='md:hidden'>
+              <Sheet>
+                <SheetTrigger>
+                  <Menu />
+                </SheetTrigger>
+                <SheetContent side='top' className='w-full'>
+                  <SheetHeader>
+                    <SheetTitle></SheetTitle>
+                    <SheetDescription></SheetDescription>
+                  </SheetHeader>
+                  <div className='text-md flex justify-around gap-4 p-5'>
+                    <Button
+                      className='cursor-pointer'
+                      variant={'outline'}
+                      size={'md'}
+                    >
+                      <Link to='/login'>Login</Link>
+                    </Button>
+                    <Button
+                      className='cursor-pointer hover:bg-neutral-200/30'
+                      variant={'secondary'}
+                      size={'md'}
+                    >
+                      <Link to='/register'>Register</Link>
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </>
+        )}
+        {/* <div></div> */}
       </div>
     </div>
   );

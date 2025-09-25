@@ -1,4 +1,4 @@
-export interface UserResto {
+export interface UserBook {
   id: string;
   name: string;
   token: string;
@@ -10,7 +10,8 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
+  role: string;
 }
 
 export interface AuthState {

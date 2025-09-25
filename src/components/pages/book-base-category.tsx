@@ -9,31 +9,21 @@ import { Footer } from '../layouts/footer';
 import { Header } from '../layouts/header';
 
 const BookList: React.FC = () => {
-  // const dispatch = useDispatch<AppDispatch>();
   const { books, loading, error } = useSelector(
     (state: RootState) => state.book
   );
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 8;
 
-  // State untuk kategori dan rating yang dipilih
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
 
-  // Mengambil data buku saat komponen dimuat
-  // useEffect(() => {
-  //   dispatch(getBooks());
-  // }, [dispatch]);
-
-  // Ekstrak daftar kategori unik dari books
   const uniqueCategories = Array.from(
     new Set(books.map((book) => book.category.name))
   ).sort();
 
-  // Daftar rating statis (1 sampai 5)
   const ratings = [1, 2, 3, 4, 5];
 
-  // Filter buku berdasarkan kategori dan rating yang dipilih
   const filteredBooks = books.filter((book) => {
     const categoryMatch =
       selectedCategories.length > 0
@@ -64,7 +54,6 @@ const BookList: React.FC = () => {
         <h1 className='mb-4 text-4xl font-bold'>Book List</h1>
         <div className='flex gap-10'>
           <div>
-            {/* Checkbox untuk memilih beberapa kategori */}
             <div className='shadow-all mb-4 h-fit w-60 p-4'>
               <h2 className='text-mg font-medium'>FILTER</h2>
               <h3 className='w-fit text-lg font-bold'>Category</h3>
@@ -125,7 +114,6 @@ const BookList: React.FC = () => {
                 </div>
               </div>
             </div>
-            {/* Checkbox untuk memilih beberapa rating */}
           </div>
           <div>
             <div className='grid grid-cols-2 gap-5 md:grid-cols-4'>

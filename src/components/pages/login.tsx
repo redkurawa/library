@@ -40,7 +40,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      user.id == 1 ? navigate('/admin') : navigate('/');
     }
   }, [user, navigate]);
 
