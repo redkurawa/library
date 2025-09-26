@@ -1,7 +1,7 @@
 import { addCart } from '@/redux/cart-slice';
 import { useAppSelector } from '@/redux/hooks';
 import type { AppDispatch } from '@/redux/store';
-import { GetService } from '@/services/service';
+import { GetService, PostService } from '@/services/service';
 import type { Book } from '@/types/detail-book';
 import { Capitalize } from '@/utils/capitalize';
 import dayjs from 'dayjs';
@@ -43,7 +43,7 @@ export const BookDetail = () => {
   const cartItems = useAppSelector((state) => state.cart);
   // console.log(cartItems);
 
-  const handleClick = () => {
+  const handleCart = () => {
     // console.log('User value:', user.user);
     if (!user.user) {
       // console.log('User is null or undefined');
@@ -74,6 +74,43 @@ export const BookDetail = () => {
     );
 
     toast.success('Buku berhasil ditambahkan ke keranjang');
+  };
+
+  // const handleBorrow = () => {
+  //   if (!user.token) {
+  //     // console.log('User is null or undefined');
+  //     toast.error('harap login terlebih dahulu');
+  //     return;
+  //   }
+  //   const payload = { bookId: detail?.id, days: 7 };
+  //   console.log(payload);
+  //   const r = PostService('loans', payload, user.token);
+  //   return r;
+  // };
+
+  const handleBorrow = async () => {
+    if (!user.token) {
+      toast.error('Harap login terlebih dahulu');
+      return;
+    }
+
+    const payload = { bookId: detail?.id, days: 7 };
+
+    try {
+      const res = await PostService('loans', payload, user.token);
+
+      // Jika backend mengembalikan success: false tapi tidak melempar error
+      if (res.data?.success === false) {
+        toast.error(res.data.message || 'Gagal meminjam buku');
+      } else {
+        toast.success('Sukses pinjam buku');
+      }
+    } catch (error: any) {
+      const msg =
+        error?.response?.data?.message ||
+        'Terjadi kesalahan saat meminjam buku';
+      toast.error(msg);
+    }
   };
 
   return (
@@ -118,10 +155,10 @@ export const BookDetail = () => {
             </p>
           </div>
           <div className='mt-5 flex gap-3'>
-            <Button variant={'outline'} size={'md'} onClick={handleClick}>
+            <Button variant={'outline'} size={'md'} onClick={handleCart}>
               Add to cart
             </Button>
-            <Button variant={'secondary'} size={'md'}>
+            <Button variant={'secondary'} size={'md'} onClick={handleBorrow}>
               Borrow
             </Button>
           </div>

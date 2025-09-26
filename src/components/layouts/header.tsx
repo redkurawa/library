@@ -11,29 +11,31 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../ui/sheet';
+import { DropdownMenu, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { DropDownUserMenu } from './dropdown-user';
 
 export const Header = () => {
-  // const [userLogin, setUserLogin] = useState<User | null>();
   const { user, token } = useAppSelector((state) => state.auth);
-  // useEffect(() => {
-  //   if (user) {
-  //     setUserLogin(user);
-  //   }
-  // }, [user]);
-  // console.log(userLogin?.id);
 
   return (
     <div className='h-20 border-b'>
       <div className='sm-container flex h-20 items-center justify-between px-1 md:px-0'>
-        <div className='flex items-center gap-4'>
-          <Logo className='text-primary-300' />
-          <h1 className='text-[32px] font-extrabold'>Booky</h1>
-        </div>
-        {token ? (
-          <div className='flex items-center gap-3'>
-            <img src='/icons/face.png' alt='' />
-            {user?.name}
+        <Link to='/'>
+          <div className='flex items-center gap-4'>
+            <Logo className='text-primary-300' />
+            <h1 className='text-[32px] font-extrabold'>Booky</h1>
           </div>
+        </Link>
+        {token ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className=''>
+              <div className='flex items-center gap-3'>
+                <img src='/icons/face.png' alt='' />
+                {user?.name}
+              </div>
+            </DropdownMenuTrigger>
+            <DropDownUserMenu />
+          </DropdownMenu>
         ) : (
           <>
             <div className='text-md hidden items-center gap-4 md:flex'>

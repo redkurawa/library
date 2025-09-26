@@ -12,11 +12,16 @@ const GetService = async (queryPath: string = '', token?: string) => {
   }
 };
 
-const PostService = async (queryPath: string = '', payload?: any) => {
+const PostService = async (
+  queryPath: string = '',
+  payload?: any,
+  token?: string
+) => {
   try {
-    // console.log('Payload:', JSON.stringify(payload));
-    const r = await api.post(queryPath, payload);
-    // console.log(r.data);
+    console.log('Payload:', JSON.stringify(payload));
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const r = await api.post(queryPath, payload, { headers });
+    console.log(r.data);
     return r;
   } catch (error: any) {
     if (error.response) {

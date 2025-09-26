@@ -6,6 +6,7 @@ import Login from './components/pages/login';
 import Register from './components/pages/register';
 import { Admin } from './components/pages/admin-page';
 import { Toaster } from './components/ui/sonner';
+import { UserPage } from './components/pages/user-page';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/books/:id' element={<BookDetail />} />
+          <Route path='/user/:id' element={<UserPage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/category' element={<BookStar />} />
