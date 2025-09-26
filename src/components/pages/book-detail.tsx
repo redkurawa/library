@@ -20,6 +20,7 @@ export const BookDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [detail, setDetail] = useState<Book | null>(null);
   const url = `books/${id}`;
+  const user = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const getDetail = async () => {
@@ -40,9 +41,15 @@ export const BookDetail = () => {
   // console.log({ relatedBook });
 
   const cartItems = useAppSelector((state) => state.cart);
-  console.log(cartItems);
+  // console.log(cartItems);
 
   const handleClick = () => {
+    // console.log('User value:', user.user);
+    if (!user.user) {
+      // console.log('User is null or undefined');
+      toast.error('harap login terlebih dahulu');
+      return;
+    }
     if (
       !detail?.id ||
       !detail?.title ||
