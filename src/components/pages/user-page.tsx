@@ -4,6 +4,7 @@ import { Header } from '../layouts/header';
 import { Footer } from '../layouts/footer';
 import { useNavigate, useParams } from 'react-router';
 import { UserBorrow } from '../layouts/user-borrow';
+import { UserReviews } from '../layouts/user-reviews';
 
 export const UserPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -33,7 +34,10 @@ export const UserPage = () => {
             <h1 className='py-6 text-[28px] font-bold'>Borrowed List</h1>
             <UserBorrow />
           </TabsContent>
-          <TabsContent value='list'>Your reviews.</TabsContent>
+          <TabsContent value='review'>
+            <h1 className='py-6 text-[28px] font-bold'>Rivews</h1>
+            <UserReviews />
+          </TabsContent>
         </Tabs>
       </div>
       <Footer />
