@@ -18,7 +18,6 @@ import {
   DialogTrigger,
 } from '../ui/dialog';
 import { Textarea } from '../ui/textarea';
-// import { useForm } from 'react-hook-form';
 
 export const UserBorrow = () => {
   // const token = useAppSelector((state) => state.auth);
@@ -31,7 +30,7 @@ export const UserBorrow = () => {
     const getLoan = async () => {
       if (user.token) {
         const r = await GetService('loans/my', user.token);
-        console.log(r.data.loans);
+        // console.log(r.data.loans);
         setLoans(r.data.loans);
       }
     };
@@ -92,7 +91,6 @@ export const UserBorrow = () => {
                 <div className='flex w-full justify-between'>
                   <div className=''>
                     <p className='text-xl font-bold'>{loan.book.title}</p>
-                    {/* <p>User ID: {loan.userId}</p> */}
                     <p className='text-md font-bold'>
                       {dayjs(loan.borrowedAt).format('DD MMM YYYY')} .{' '}
                       {getLoanDay(loan.borrowedAt, loan.dueAt)}
@@ -130,7 +128,6 @@ export const UserBorrow = () => {
                           </div>
                           <DialogFooter>
                             <DialogClose asChild>
-                              {/* <Button variant='outline'>Cancel</Button> */}
                               <Button
                                 type='submit'
                                 variant={'secondary'}

@@ -50,67 +50,69 @@ const BookList: React.FC = () => {
   return (
     <>
       <Header />
-      <div className='sm-container mt-12'>
+      <div className='sm-container mt-12 px-2 md:px-0'>
         <h1 className='mb-4 text-4xl font-bold'>Book List</h1>
-        <div className='flex gap-10'>
+        <div className='gap-10 md:flex'>
           <div>
-            <div className='shadow-all mb-4 h-fit w-60 p-4'>
+            <div className='shadow-all mb-4 h-fit rounded-xl p-4 md:w-60'>
               <h2 className='text-mg font-medium'>FILTER</h2>
-              <h3 className='w-fit text-lg font-bold'>Category</h3>
-              <div className='mt-2 gap-4'>
-                {uniqueCategories.map((category) => (
-                  <div
-                    key={category}
-                    className='mb-4 flex items-center space-x-2'
-                  >
-                    <Checkbox
-                      id={category}
-                      checked={selectedCategories.includes(category)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedCategories([
-                            ...selectedCategories,
-                            category,
-                          ]);
-                        } else {
-                          setSelectedCategories(
-                            selectedCategories.filter((c) => c !== category)
-                          );
-                        }
-                        setCurrentPage(1);
-                      }}
-                    />
-                    <Label htmlFor={category}>{category}</Label>
-                  </div>
-                ))}
-              </div>
-              <div className='mb-4'>
-                <h3 className='w-fit text-lg font-bold'>Category</h3>
-                <div className='mt-2 gap-4'>
-                  {ratings.map((rating) => (
+              <div className='mt-2 flex justify-around md:block'>
+                <div className='gap-4'>
+                  <h3 className='w-fit text-lg font-bold'>Category</h3>
+                  {uniqueCategories.map((category) => (
                     <div
-                      key={rating}
+                      key={category}
                       className='mb-4 flex items-center space-x-2'
                     >
                       <Checkbox
-                        id={`rating-${rating}`}
-                        checked={selectedRatings.includes(rating)}
+                        id={category}
+                        checked={selectedCategories.includes(category)}
                         onCheckedChange={(checked) => {
                           if (checked) {
-                            setSelectedRatings([...selectedRatings, rating]);
+                            setSelectedCategories([
+                              ...selectedCategories,
+                              category,
+                            ]);
                           } else {
-                            setSelectedRatings(
-                              selectedRatings.filter((r) => r !== rating)
+                            setSelectedCategories(
+                              selectedCategories.filter((c) => c !== category)
                             );
                           }
                           setCurrentPage(1);
                         }}
                       />
-                      <Label htmlFor={`rating-${rating}`}>
-                        {rating} Bintang
-                      </Label>
+                      <Label htmlFor={category}>{category}</Label>
                     </div>
                   ))}
+                </div>
+                <div className='mb-4'>
+                  <h3 className='w-fit text-lg font-bold'>Rating</h3>
+                  <div className='mt-2 gap-4'>
+                    {ratings.map((rating) => (
+                      <div
+                        key={rating}
+                        className='mb-4 flex items-center space-x-2'
+                      >
+                        <Checkbox
+                          id={`rating-${rating}`}
+                          checked={selectedRatings.includes(rating)}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setSelectedRatings([...selectedRatings, rating]);
+                            } else {
+                              setSelectedRatings(
+                                selectedRatings.filter((r) => r !== rating)
+                              );
+                            }
+                            setCurrentPage(1);
+                          }}
+                        />
+                        <Label htmlFor={`rating-${rating}`}>
+                          {rating} Bintang
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
