@@ -1,15 +1,16 @@
 import { useAppSelector } from '@/redux/hooks';
 import { GetService } from '@/services/service';
 import type { Review } from '@/types/page-reviews';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { StarRated } from '../ui/star-rating';
-import dayjs from 'dayjs';
-// import { Header } from './header';
-// import { Footer } from './footer';
 
 export const UserReviews = () => {
   const user = useAppSelector((state) => state.auth);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [bookDetails, setBookDetails] = useState<
+    Record<number, { category: string; author: string }>
+  >({});
 
   useEffect(() => {
     const getReview = async () => {
@@ -22,12 +23,32 @@ export const UserReviews = () => {
   }, [user.token]);
 
   useEffect(() => {
-    console.log('Updated reviews:', reviews);
+    const fetchDetails = async () => {
+      const details: Record<number, { category: string; author: string }> = {};
+      for (const review of reviews) {
+        const r = await GetService(`books/${review.book.id}`);
+        // console.log('Fetched book:', r.data);
+        details[review.book.id] = {
+          category: r.data.category.name,
+          author: r.data.author.name,
+        };
+      }
+      setBookDetails(details);
+    };
+
+    if (reviews.length > 0) {
+      fetchDetails();
+    }
   }, [reviews]);
+
+  // useEffect(() => {
+  //   // console.log('Updated reviews:', reviews);
+  //   console.log('Updated reviews:', bookDetails);
+  // }, [bookDetails]);
 
   return (
     <>
-      <div>
+      <div className=''>
         {reviews.map((review) => (
           <div key={review.id} className='shadow-all mb-6 rounded-2xl p-5'>
             <p className='text-md border-b pb-5 font-semibold'>
@@ -40,9 +61,13 @@ export const UserReviews = () => {
                 className='w-23 object-cover'
               />
               <div className='py-5'>
-                <p className='text-sm font-bold'>category</p>
+                <p className='text-sm font-bold'>
+                  {bookDetails[review.book.id]?.category || 'Loading...'}
+                </p>
                 <p className='text-xl font-bold'>{review.book.title}</p>
-                <p className='text-md font-medium'>Author</p>
+                <p className='text-md font-medium'>
+                  {bookDetails[review.book.id]?.author || 'Loading...'}
+                </p>
               </div>
             </div>
             <div className='pt-5 pb-2'>

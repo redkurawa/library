@@ -173,9 +173,7 @@ export const BookDetail = () => {
         {/* <div>Kategory buku : {detail?.category.name}</div> */}
         <div className='grid grid-cols-5 gap-5'>
           {relatedBook.map((book) => (
-            <>
-              <BookCard key={book.id} book={book} />
-            </>
+            <BookCard key={book.id} book={book} />
           ))}
         </div>
       </div>

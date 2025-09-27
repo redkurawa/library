@@ -18,7 +18,7 @@ export const Header = () => {
   const { user, token } = useAppSelector((state) => state.auth);
 
   return (
-    <div className='h-20 border-b'>
+    <div className='h-20 border-b px-1'>
       <div className='sm-container flex h-20 items-center justify-between px-1 md:px-0'>
         <Link to='/'>
           <div className='flex items-center gap-4'>

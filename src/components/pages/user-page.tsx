@@ -11,12 +11,12 @@ export const UserPage = () => {
   const navigate = useNavigate();
 
   const tabValue = id ?? 'profile';
-  console.log(tabValue);
+  // console.log(tabValue);
 
   return (
     <>
       <Header />
-      <div className='mx-auto w-full max-w-250'>
+      <div className='mx-auto w-full max-w-250 px-2'>
         <Tabs
           value={tabValue}
           onValueChange={(val) => navigate(`/user/${val}`)}
