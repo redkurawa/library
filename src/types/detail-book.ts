@@ -1,21 +1,18 @@
-// Tipe untuk data pengguna yang membuat ulasan
 export interface User {
   id: number;
   name: string;
 }
 
-// Tipe untuk ulasan buku
 export interface Review {
   id: number;
   bookId: number;
   userId: number;
-  user: User; // Objek pengguna terkait dengan ulasan
+  user: User;
   comment: string;
   star: number;
-  createdAt: string; // Menggunakan string untuk tanggal ISO 8601
+  createdAt: string;
 }
 
-// Tipe untuk data penulis buku
 export interface Author {
   id: number;
   name: string;
@@ -24,7 +21,6 @@ export interface Author {
   updatedAt: string;
 }
 
-// Tipe untuk data kategori buku
 export interface Category {
   id: number;
   name: string;
@@ -32,7 +28,6 @@ export interface Category {
   updatedAt: string;
 }
 
-// Tipe utama untuk data buku
 export interface Book {
   id: number;
   title: string;
@@ -40,16 +35,16 @@ export interface Book {
   isbn: string;
   publishedYear: number;
   authorId: number;
-  author: Author; // Objek penulis terkait
+  author: Author;
   categoryId: number;
-  category: Category; // Objek kategori terkait
-  coverImage: string; // Representasi string dari gambar (base64)
+  category: Category;
+  coverImage: string;
   availableCopies: number;
   totalCopies: number;
   borrowCount: number;
   rating: number;
   reviewCount: number;
-  reviews: Review[]; // Array dari objek ulasan
+  reviews: Review[];
   createdAt: string;
   updatedAt: string;
 }

@@ -1,5 +1,3 @@
-// auth-slice.ts
-
 import { PostService } from '@/services/service';
 import type { AuthState, LoginPayload, LoginRequest } from '@/types/user';
 import {

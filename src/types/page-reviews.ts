@@ -4,7 +4,7 @@ export type Review = {
   comment: string;
   userId: number;
   bookId: number;
-  createdAt: string; // ISO date string
+  createdAt: string;
   book: {
     id: number;
     title: string;

@@ -27,7 +27,6 @@ export const UserReviews = () => {
       const details: Record<number, { category: string; author: string }> = {};
       for (const review of reviews) {
         const r = await GetService(`books/${review.book.id}`);
-        // console.log('Fetched book:', r.data);
         details[review.book.id] = {
           category: r.data.category.name,
           author: r.data.author.name,
@@ -40,11 +39,6 @@ export const UserReviews = () => {
       fetchDetails();
     }
   }, [reviews]);
-
-  // useEffect(() => {
-  //   // console.log('Updated reviews:', reviews);
-  //   console.log('Updated reviews:', bookDetails);
-  // }, [bookDetails]);
 
   return (
     <>

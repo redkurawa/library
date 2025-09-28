@@ -36,7 +36,6 @@ export const DialogDelete = ({
             className='hover:text-accent-red w-40 border-0 bg-red-700 font-bold hover:bg-red-200'
             size={'md'}
             onClick={() => {
-              // logika delete
               setOpen(false);
             }}
           >

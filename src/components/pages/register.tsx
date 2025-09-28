@@ -6,8 +6,11 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Logo } from '../ui/logo';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router';
 
 export const Register = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -21,7 +24,8 @@ export const Register = () => {
       const { confirm, ...payload } = data;
       console.log({ payload });
       const r = await PostService('auth/register', payload);
-      // console.log({ r });
+      toast.success('Register Success');
+      navigate('/login');
       return r;
     } catch (error) {
       console.error({ error });
@@ -83,30 +87,11 @@ export const Register = () => {
             <Button
               className='h-12 w-full rounded-full py-2'
               type='submit'
-              // disabled={isLoading}
               variant={'secondary'}
             >
               Register
-              {/* {isLoading ? (
-                <span className='flex items-center gap-2'>
-                  <Loader2 className='size-8 animate-spin text-red-100' />
-                  Register ...
-                </span>
-              ) : (
-                'Register'
-              )} */}
             </Button>
           </form>
-
-          {/* {user && (
-            <div>
-              <h3>Welcome, {user.name}!</h3>
-              <p>Email: {user.email}</p>
-              <p className='break-all whitespace-normal'>token: {token}</p>
-            </div>
-          )} */}
-
-          {/* {error && <p>Error: {error.message}</p>} */}
         </div>
       </div>
     </div>

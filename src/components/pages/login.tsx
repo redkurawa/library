@@ -12,8 +12,6 @@ import { Logo } from '../ui/logo';
 import { LoginSchema } from '@/schema/login-schema';
 
 export const Login = () => {
-  // const [email, setEmail] = useState('');
-  // const [password, setPasswd] = useState('');
   const navigate = useNavigate();
 
   const {
@@ -27,15 +25,10 @@ export const Login = () => {
   const { user, isLoading, error, token } = useAppSelector(
     (state) => state.auth
   );
-  // console.log({ token });
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: LoginSchema) => {
-    // e.preventDefault();
-    // const userData = { email, password };
-    // dispatch(loginUser(userData));
     dispatch(loginUser(data));
-    // console.log(userData);
   };
 
   useEffect(() => {
@@ -62,13 +55,7 @@ export const Login = () => {
             <Label className='text-sm font-bold' htmlFor='email'>
               Email
             </Label>
-            <Input
-              id='email'
-              // value={email}
-              // onChange={(e) => setEmail(e.target.value)}
-              {...register('email')}
-              className='my-2'
-            />
+            <Input id='email' {...register('email')} className='my-2' />
             {errors.email && (
               <p className='text-sm font-bold text-red-500'>
                 {errors.email.message}
@@ -77,13 +64,7 @@ export const Login = () => {
             <Label className='text-sm font-bold' htmlFor='password'>
               Password
             </Label>
-            <Input
-              id='password'
-              // value={password}
-              // onChange={(e) => setPasswd(e.target.value)}
-              {...register('password')}
-              className='my-2'
-            />
+            <Input id='password' {...register('password')} className='my-2' />
             {errors.password && (
               <p className='text-sm font-bold text-red-500'>
                 {errors.password.message}

@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const BookList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  // Select books, loading, and error from Redux store using useAppSelector
   const { books, loading, error } = useSelector(
     (state: RootState) => state.book
   );
@@ -17,7 +16,6 @@ const BookList: React.FC = () => {
     dispatch(getBooks());
   }, [dispatch]);
 
-  // Calculate how many times each author appears in books
   const authorCounts = Object.entries(
     books.reduce(
       (acc: { [key: number]: { name: string; count: number } }, book: Book) => {

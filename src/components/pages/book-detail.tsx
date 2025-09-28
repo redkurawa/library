@@ -27,7 +27,6 @@ export const BookDetail = () => {
       try {
         const r = await GetService(url);
         const bookData: Book = r.data;
-        // console.log('Data received:', bookData);
         setDetail(bookData);
       } catch (err) {}
     };
@@ -39,15 +38,10 @@ export const BookDetail = () => {
     .filter((book) => book.category.name === detail?.category.name)
     .slice(0, 4);
 
-  console.log({ relatedBook });
-
   const cartItems = useAppSelector((state) => state.cart);
-  // console.log(cartItems);
 
   const handleCart = () => {
-    // console.log('User value:', user.user);
     if (!user.user) {
-      // console.log('User is null or undefined');
       toast.error('harap login terlebih dahulu');
       return;
     }
@@ -153,12 +147,10 @@ export const BookDetail = () => {
         </div>
       </div>
       <div className='sm-container px-2 pb-16'>
-        {/* <h1 className='mt-16 mb-5 text-4xl font-bold'>Review</h1> */}
         <ShowReview detail={detail} />
       </div>
       <div className='sm-container px-2 pb-16'>
         <h1 className='mt-16 mb-10 text-4xl font-bold'>Related Books</h1>
-        {/* <div>Kategory buku : {detail?.category.name}</div> */}
         <div className='grid grid-cols-2 gap-5 md:grid-cols-4'>
           {relatedBook.map((book) => (
             <BookCard key={book.id} book={book} />

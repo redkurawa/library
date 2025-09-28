@@ -1,11 +1,9 @@
-// src/schema/userSchema.ts
 import { z } from 'zod';
 
 export const RegisSchema = z
   .object({
     name: z.string(),
     email: z.string().email('Format email tidak valid'),
-    // phone: z.number(),
     password: z
       .string()
       .min(6, { message: 'Kata sandi harus minimal 6 karakter.' }),
@@ -18,5 +16,4 @@ export const RegisSchema = z
     path: ['confirm'],
   });
 
-// Type otomatis dari schema
 export type RegisSchema = z.infer<typeof RegisSchema>;

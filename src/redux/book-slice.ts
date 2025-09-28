@@ -17,11 +17,6 @@ const initialState: BooksState = {
   error: null,
 };
 
-// Create async thunk for fetching books.
-// 'export const getBooks' - Exports the thunk.
-// 'createAsyncThunk' - Takes action type string and async function.
-// The async function calls the mock generator and returns data.
-// If error, rejects with value.
 export const getBooks = createAsyncThunk('books/getBooks', async () => {
   try {
     const r = await GetService('books');

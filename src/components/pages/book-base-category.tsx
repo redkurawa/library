@@ -36,7 +36,6 @@ const BookList: React.FC = () => {
     return categoryMatch && ratingMatch;
   });
 
-  // Menghitung pagination untuk daftar buku
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);

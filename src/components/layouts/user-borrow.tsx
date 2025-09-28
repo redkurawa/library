@@ -39,14 +39,12 @@ export const UserBorrow = () => {
     };
     getLoan();
   }, [user.token]);
-  // console.log('loans:', loans);
 
   useEffect(() => {
     const fetchDetails = async () => {
       const details: Record<number, { category: string; author: string }> = {};
       for (const loan of loans) {
         const r = await GetService(`books/${loan.book.id}`);
-        // console.log('Fetched book:', r.data);
         details[loan.book.id] = {
           category: r.data.category.name,
           author: r.data.author.name,

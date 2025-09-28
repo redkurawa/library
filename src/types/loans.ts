@@ -11,8 +11,8 @@ export interface Loan {
   userId: number;
   bookId: number;
   book: Book;
-  borrowedAt: string; // ISO date string
-  dueAt: string; // ISO date string
+  borrowedAt: string;
+  dueAt: string;
   returnedAt: string | null;
   status: LoanStatus;
 }

@@ -1,4 +1,3 @@
-// import { useParams, useNavigate } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Header } from '../layouts/header';
 import { Footer } from '../layouts/footer';
@@ -12,7 +11,6 @@ export const UserPage = () => {
   const navigate = useNavigate();
 
   const tabValue = id ?? 'profile';
-  // console.log(tabValue);
 
   return (
     <>

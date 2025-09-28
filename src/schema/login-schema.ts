@@ -1,4 +1,3 @@
-// src/schema/userSchema.ts
 import { z } from 'zod';
 
 export const LoginSchema = z.object({
@@ -8,5 +7,4 @@ export const LoginSchema = z.object({
     .min(6, { message: 'Kata sandi harus minimal 6 karakter.' }),
 });
 
-// Type otomatis dari schema
 export type LoginSchema = z.infer<typeof LoginSchema>;

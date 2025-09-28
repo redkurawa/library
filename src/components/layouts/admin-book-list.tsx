@@ -133,7 +133,6 @@ export const AdminBookList = () => {
             </div>
           </div>
         </div>
-        // <BookCard key={book.id} book={book} />
       ))}
     </div>
   );

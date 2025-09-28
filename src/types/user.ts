@@ -4,8 +4,6 @@ export interface UserBook {
   token: string;
 }
 
-// gemini types.ts
-
 export interface User {
   id: number;
   name: string;

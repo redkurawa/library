@@ -24,7 +24,6 @@ export const AdminBorrowList = () => {
     if (!token) return;
     const getBorrow = async () => {
       const r = await GetService('admin/overview', token);
-      console.log(r.data.topBorrowed);
       setListLoans(r.data.topBorrowed);
     };
     getBorrow();
