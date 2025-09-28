@@ -35,9 +35,13 @@ const BookList: React.FC = () => {
           </Link>
         ))}
       </div>
-      <div>
+      <div className='m-5 mx-auto flex w-full justify-center'>
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button key={page} onClick={() => paginate(page)}>
+          <button
+            key={page}
+            onClick={() => paginate(page)}
+            className='m-1 rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600'
+          >
             {page}
           </button>
         ))}

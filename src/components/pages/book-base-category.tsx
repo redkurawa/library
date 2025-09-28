@@ -22,7 +22,7 @@ const BookList: React.FC = () => {
     new Set(books.map((book) => book.category.name))
   ).sort();
 
-  const ratings = [1, 2, 3, 4, 5];
+  const ratings = [0, 1, 2, 3, 4, 5];
 
   const filteredBooks = books.filter((book) => {
     const categoryMatch =
@@ -125,7 +125,7 @@ const BookList: React.FC = () => {
                 </Link>
               ))}
             </div>
-            <div className='mt-4'>
+            <div className='m-5 mx-auto flex w-full justify-center'>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (page) => (
                   <button
