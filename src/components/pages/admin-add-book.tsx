@@ -33,6 +33,7 @@ export default function AddBook() {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<AddBookFormType>({
     resolver: zodResolver(AddBookSchema),
@@ -61,6 +62,7 @@ export default function AddBook() {
       const r = await PostService('books', data, token);
       console.log(r);
       toast.success('Book added successfully!');
+      reset();
     } catch (err) {
       toast.error('Failed to add book');
     }
