@@ -5,6 +5,7 @@ import { Footer } from '../layouts/footer';
 import { useNavigate, useParams } from 'react-router';
 import { UserBorrow } from '../layouts/user-borrow';
 import { UserReviews } from '../layouts/user-reviews';
+import { UserProfile } from '../layouts/user-profile';
 
 export const UserPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,7 +29,7 @@ export const UserPage = () => {
             <TabsTrigger value='review'>Reviews</TabsTrigger>
           </TabsList>
           <TabsContent value='profile'>
-            Make changes to your profile here.
+            <UserProfile />
           </TabsContent>
           <TabsContent value='borrow'>
             <h1 className='py-6 text-[28px] font-bold'>Borrowed List</h1>
