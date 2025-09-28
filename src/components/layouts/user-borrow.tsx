@@ -18,6 +18,7 @@ import {
   DialogTrigger,
 } from '../ui/dialog';
 import { Textarea } from '../ui/textarea';
+import { api } from '@/services/api';
 
 export const UserBorrow = () => {
   // const token = useAppSelector((state) => state.auth);
@@ -83,6 +84,83 @@ export const UserBorrow = () => {
     }
   };
 
+  // const handleReturn = async (id: number) => {
+  //   console.log({ id });
+  //   try {
+  //     const r = await api.patch(`loans/${id}/return`, null, {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     });
+  //     console.log('Return response:', r);
+  //     toast.success('Book return successfully');
+  //   } catch (e: any) {
+  //     const msg = e?.response?.data?.message || 'Delete failed';
+  //     toast.error(msg);
+  //     console.error('Return error:', e.response?.data || e.message);
+  //   }
+  // };
+
+  // const handleReturn = async (id: number) => {
+  //   console.log('PATCH loan return:', {
+  //     id,
+  //     token: user.token,
+  //   });
+  //   try {
+  //     const r = await api.patch(`loans/${id}/return`, null, {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //         Accept: '*/*', // ⬅️ samakan dengan curl
+  //       },
+  //     });
+  //     console.log('Return response:', r);
+  //     toast.success('Book return successfully');
+  //     setLoans((prev) => prev.filter((l) => l.id !== id));
+  //   } catch (e: any) {
+  //     const msg = e?.response?.data?.message || 'Return failed';
+  //     toast.error(msg);
+  //     console.error('Return error:', e.response?.data || e.message);
+  //   }
+  // };
+
+  const handleReturn = async (id: number) => {
+    try {
+      const response = await fetch(
+        `https://belibraryformentee-production.up.railway.app/api/loans/${id}/return`,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            Accept: '*/*',
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+
+        // Coba parse JSON jika bisa
+        try {
+          const errorJson = JSON.parse(errorText);
+          toast.error(errorJson.message || 'Return failed');
+          console.error('Return error:', errorJson);
+        } catch {
+          toast.error('Return failed');
+          console.error('Return error (non-JSON):', errorText);
+        }
+
+        return;
+      }
+      toast.success('Book return successfully');
+      setLoans((prev) =>
+        prev.map((l) => (l.id === id ? { ...l, status: 'RETURNED' } : l))
+      );
+    } catch (e: any) {
+      toast.error('Return failed');
+      console.error('Return error:', e.message);
+    }
+  };
+
   return (
     <>
       <div className='mx-auto w-full max-w-250'>
@@ -92,7 +170,15 @@ export const UserBorrow = () => {
               <div className='flex justify-between border-b py-5'>
                 <h1 className='text-md font-bold'>
                   Status :{' '}
-                  {loan.status === 'BORROWED' ? 'active' : 'return'}{' '}
+                  {loan.status === 'BORROWED' ? (
+                    <span className='rounded-[4px] bg-[#24A5000D] px-2 py-1 text-sm text-[#24A500]'>
+                      active
+                    </span>
+                  ) : (
+                    <span className='rounded-[4px] bg-[#24A5000D] px-2 py-1 text-sm text-[#24A500]'>
+                      returned
+                    </span>
+                  )}{' '}
                 </h1>
                 <h1 className='text-md font-bold'>
                   Due Date{' '}
@@ -100,7 +186,6 @@ export const UserBorrow = () => {
                     {dayjs(loan.dueAt).format('DD MMM YYYY')}{' '}
                   </span>
                 </h1>
-                {/* <h1></h1> */}
               </div>
               <div className='flex gap-3 py-5'>
                 <div className='w-23'>
@@ -126,52 +211,66 @@ export const UserBorrow = () => {
                       {getLoanDay(loan.borrowedAt, loan.dueAt)}
                     </p>
                   </div>
-                  <div className='flex items-center'>
-                    <Dialog>
-                      <form>
-                        <DialogTrigger asChild>
-                          <Button variant={'secondary'} size={'md'}>
-                            Give Review
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className='sm:max-w-[425px]'>
-                          <DialogHeader>
-                            <DialogTitle>Give Review</DialogTitle>
-                            <DialogDescription className='hidden'></DialogDescription>
-                          </DialogHeader>
-                          <div className='grid gap-4'>
-                            <div className='mx-auto grid gap-3'>
-                              <h1 className='text-center'>Give Rating</h1>
-                              <StarRating value={rating} onChange={setRating} />
+                  <div className='flex items-center gap-3'>
+                    <div className='flex gap-3 sm:block'>
+                      <Dialog>
+                        <form>
+                          <DialogTrigger asChild>
+                            <Button variant={'secondary'} size={'md'}>
+                              Give Review
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className='sm:max-w-[425px]'>
+                            <DialogHeader>
+                              <DialogTitle>Give Review</DialogTitle>
+                              <DialogDescription className='hidden'></DialogDescription>
+                            </DialogHeader>
+                            <div className='grid gap-4'>
+                              <div className='mx-auto grid gap-3'>
+                                <h1 className='text-center'>Give Rating</h1>
+                                <StarRating
+                                  value={rating}
+                                  onChange={setRating}
+                                />
+                              </div>
+                              <div className='grid gap-3'>
+                                <Textarea
+                                  rows={4}
+                                  id='review'
+                                  name='review'
+                                  placeholder='Please share your thoughts about this book'
+                                  className='resize-none'
+                                  value={review}
+                                  onChange={(e) => setReview(e.target.value)}
+                                />
+                              </div>
                             </div>
-                            <div className='grid gap-3'>
-                              <Textarea
-                                rows={4}
-                                id='review'
-                                name='review'
-                                placeholder='Please share your thoughts about this book'
-                                className='resize-none'
-                                value={review}
-                                onChange={(e) => setReview(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                          <DialogFooter>
-                            <DialogClose asChild>
-                              <Button
-                                type='submit'
-                                variant={'secondary'}
-                                // size={'md'}
-                                className='w-full'
-                                onClick={() => handleReview(loan)}
-                              >
-                                Save changes
-                              </Button>
-                            </DialogClose>
-                          </DialogFooter>
-                        </DialogContent>
-                      </form>
-                    </Dialog>
+                            <DialogFooter>
+                              <DialogClose asChild>
+                                <Button
+                                  type='submit'
+                                  variant={'secondary'}
+                                  // size={'md'}
+                                  className='w-full'
+                                  onClick={() => handleReview(loan)}
+                                >
+                                  Save changes
+                                </Button>
+                              </DialogClose>
+                            </DialogFooter>
+                          </DialogContent>
+                        </form>
+                      </Dialog>
+                      <Button
+                        className='block flex-1 sm:mt-2 sm:w-full'
+                        variant={'outline'}
+                        size={'md'}
+                        onClick={() => handleReturn(loan.id)}
+                      >
+                        Return
+                      </Button>
+                    </div>
+                    <div></div>
                   </div>
                 </div>
               </div>

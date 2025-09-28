@@ -23,7 +23,7 @@ export const UserPage = () => {
           onValueChange={(val) => navigate(`/user/${val}`)}
           className='mt-12'
         >
-          <TabsList className='w-1/2'>
+          <TabsList className='w-full sm:w-1/2'>
             <TabsTrigger value='profile'>Profile</TabsTrigger>
             <TabsTrigger value='borrow'>Borrowed List</TabsTrigger>
             <TabsTrigger value='review'>Reviews</TabsTrigger>

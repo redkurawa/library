@@ -41,9 +41,11 @@ export const AdminBookList = () => {
   return (
     <div className='mt-6'>
       <h1 className='text-[28px] font-bold'>Book List</h1>
-      <Button className='my-6' variant={'secondary'} size={'md'}>
-        Add Book
-      </Button>
+      <Link to='/add'>
+        <Button className='my-6' variant={'secondary'} size={'md'}>
+          Add Book
+        </Button>
+      </Link>
       {books.map((book) => (
         <div className='shadow-all mb-4 flex gap-4 rounded-2xl p-5'>
           <div className='w-23'>

@@ -28,7 +28,7 @@ export const Header = () => {
         </Link>
         {token ? (
           <DropdownMenu>
-            <DropdownMenuTrigger asChild className=''>
+            <DropdownMenuTrigger asChild className='cursor-pointer'>
               <div className='flex items-center gap-3'>
                 <img src='/icons/face.png' alt='' />
                 {user?.name}

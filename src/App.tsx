@@ -7,6 +7,7 @@ import Register from './components/pages/register';
 import { Admin } from './components/pages/admin-page';
 import { Toaster } from './components/ui/sonner';
 import { UserPage } from './components/pages/user-page';
+import AddBook from './components/pages/admin-add-book';
 
 function App() {
   return (
@@ -20,12 +21,9 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/category' element={<BookStar />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/add' element={<AddBook />} />
         </Routes>
-        <Toaster
-          position='top-center' // ⬅️ posisi toast di tengah atas
-          richColors // ⬅️ aktifkan warna default seperti hijau/oranye
-          // closeButton // ⬅️ opsional: tombol tutup
-        />
+        <Toaster position='top-center' richColors />
       </div>
     </>
   );
