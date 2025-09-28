@@ -35,10 +35,11 @@ export const BookDetail = () => {
   }, []);
 
   const { books } = useAppSelector((state) => state.book);
-  const relatedBook = books.filter(
-    (book) => book.category.name === detail?.category.name
-  );
-  // console.log({ relatedBook });
+  const relatedBook = books
+    .filter((book) => book.category.name === detail?.category.name)
+    .slice(0, 4);
+
+  console.log({ relatedBook });
 
   const cartItems = useAppSelector((state) => state.cart);
   // console.log(cartItems);
@@ -76,18 +77,6 @@ export const BookDetail = () => {
     toast.success('Buku berhasil ditambahkan ke keranjang');
   };
 
-  // const handleBorrow = () => {
-  //   if (!user.token) {
-  //     // console.log('User is null or undefined');
-  //     toast.error('harap login terlebih dahulu');
-  //     return;
-  //   }
-  //   const payload = { bookId: detail?.id, days: 7 };
-  //   console.log(payload);
-  //   const r = PostService('loans', payload, user.token);
-  //   return r;
-  // };
-
   const handleBorrow = async () => {
     if (!user.token) {
       toast.error('Harap login terlebih dahulu');
@@ -99,7 +88,6 @@ export const BookDetail = () => {
     try {
       const res = await PostService('loans', payload, user.token);
 
-      // Jika backend mengembalikan success: false tapi tidak melempar error
       if (res.data?.success === false) {
         toast.error(res.data.message || 'Gagal meminjam buku');
       } else {
@@ -116,12 +104,12 @@ export const BookDetail = () => {
   return (
     <>
       <Header />
-      <div className='sm-container mx-auto mt-25 flex gap-9 border-b pb-16'>
-        <div>
+      <div className='sm-container mx-auto mt-25 gap-9 border-b px-2 pb-16 sm:flex'>
+        <div className='mb-5'>
           <img
             src={detail?.coverImage}
             alt={detail?.title}
-            className='h-auto max-h-[400px] w-auto flex-none object-contain'
+            className='mx-auto h-auto max-h-[400px] w-auto flex-none object-contain'
           />
         </div>
 
@@ -164,14 +152,14 @@ export const BookDetail = () => {
           </div>
         </div>
       </div>
-      <div className='sm-container pb-16'>
+      <div className='sm-container px-2 pb-16'>
         {/* <h1 className='mt-16 mb-5 text-4xl font-bold'>Review</h1> */}
         <ShowReview detail={detail} />
       </div>
-      <div className='sm-container pb-16'>
+      <div className='sm-container px-2 pb-16'>
         <h1 className='mt-16 mb-10 text-4xl font-bold'>Related Books</h1>
         {/* <div>Kategory buku : {detail?.category.name}</div> */}
-        <div className='grid grid-cols-5 gap-5'>
+        <div className='grid grid-cols-2 gap-5 md:grid-cols-4'>
           {relatedBook.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}

@@ -24,19 +24,41 @@ export const UserBorrow = () => {
   const [loans, setLoans] = useState<Loan[]>([]);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const [bookDetails, setBookDetails] = useState<
+    Record<number, { category: string; author: string }>
+  >({});
   const user = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const getLoan = async () => {
       if (user.token) {
         const r = await GetService('loans/my', user.token);
-        // console.log(r.data.loans);
+        console.log(r.data.loans);
         setLoans(r.data.loans);
       }
     };
     getLoan();
   }, [user.token]);
   // console.log('loans:', loans);
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      const details: Record<number, { category: string; author: string }> = {};
+      for (const loan of loans) {
+        const r = await GetService(`books/${loan.book.id}`);
+        // console.log('Fetched book:', r.data);
+        details[loan.book.id] = {
+          category: r.data.category.name,
+          author: r.data.author.name,
+        };
+      }
+      setBookDetails(details);
+    };
+
+    if (loans.length > 0) {
+      fetchDetails();
+    }
+  }, [loans]);
 
   const handleReview = async (loan: Loan) => {
     if (user.token) {
@@ -80,7 +102,7 @@ export const UserBorrow = () => {
                 </h1>
                 {/* <h1></h1> */}
               </div>
-              <div className='flex py-5'>
+              <div className='flex gap-3 py-5'>
                 <div className='w-23'>
                   <img
                     src={loan.book.coverImage}
@@ -88,10 +110,18 @@ export const UserBorrow = () => {
                     className='object-cover'
                   />
                 </div>
-                <div className='flex w-full justify-between'>
+                <div className='block w-full justify-between sm:flex'>
                   <div className=''>
-                    <p className='text-xl font-bold'>{loan.book.title}</p>
-                    <p className='text-md font-bold'>
+                    <p className='w-fit rounded-sm border px-2 py-1 text-sm font-bold'>
+                      {bookDetails[loan.book.id]?.category || 'Loading...'}
+                    </p>
+                    <p className='text-md leading-loose font-bold md:text-xl'>
+                      {loan.book.title}
+                    </p>
+                    <p className='text-md leading-loose font-medium'>
+                      {bookDetails[loan.book.id]?.author || 'Loading...'}
+                    </p>
+                    <p className='md:text-md text-sm font-bold'>
                       {dayjs(loan.borrowedAt).format('DD MMM YYYY')} .{' '}
                       {getLoanDay(loan.borrowedAt, loan.dueAt)}
                     </p>
@@ -131,7 +161,7 @@ export const UserBorrow = () => {
                               <Button
                                 type='submit'
                                 variant={'secondary'}
-                                size={'md'}
+                                // size={'md'}
                                 className='w-full'
                                 onClick={() => handleReview(loan)}
                               >

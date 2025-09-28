@@ -3,14 +3,14 @@ import type { Book } from '@/types/books';
 export const BookCard = ({ book }: { book: Book }) => {
   return (
     <div className='shadow-all rounded-t-[12px]'>
-      <div className='mb-5 h-[258px] md:h-[336px]'>
+      <div className='mb-5 max-h-100 overflow-hidden'>
         {book.coverImage &&
         typeof book.coverImage === 'string' &&
         book.coverImage.trim() !== '' ? (
           <img
             src={book.coverImage}
             alt={book.title}
-            className='rounded-t-[12px]'
+            className='rounded-t-[12px] object-cover'
           />
         ) : (
           <div className='gray-placeholder rounded-t-2xl'></div>

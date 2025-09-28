@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import { AdminBookList } from '../layouts/admin-book-list';
+import { AdminBorrowList } from '../layouts/admin-borrow-list';
 
 export const Admin = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export const Admin = () => {
             <TabsTrigger value='list'>Book List</TabsTrigger>
           </TabsList>
           <TabsContent value='borrowed'>
-            Make changes to your account here.
+            <AdminBorrowList />
           </TabsContent>
           <TabsContent value='user'>Change your user here.</TabsContent>
           <TabsContent value='list'>

@@ -61,11 +61,13 @@ export const UserReviews = () => {
                 className='w-23 object-cover'
               />
               <div className='py-5'>
-                <p className='text-sm font-bold'>
+                <p className='w-fit rounded-sm border px-2 py-1 text-sm font-bold'>
                   {bookDetails[review.book.id]?.category || 'Loading...'}
                 </p>
-                <p className='text-xl font-bold'>{review.book.title}</p>
-                <p className='text-md font-medium'>
+                <p className='text-xl leading-loose font-bold'>
+                  {review.book.title}
+                </p>
+                <p className='text-md leading-loose font-medium'>
                   {bookDetails[review.book.id]?.author || 'Loading...'}
                 </p>
               </div>
