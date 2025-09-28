@@ -83,45 +83,6 @@ export const UserBorrow = () => {
     }
   };
 
-  // const handleReturn = async (id: number) => {
-  //   console.log({ id });
-  //   try {
-  //     const r = await api.patch(`loans/${id}/return`, null, {
-  //       headers: {
-  //         Authorization: `Bearer ${user.token}`,
-  //       },
-  //     });
-  //     console.log('Return response:', r);
-  //     toast.success('Book return successfully');
-  //   } catch (e: any) {
-  //     const msg = e?.response?.data?.message || 'Delete failed';
-  //     toast.error(msg);
-  //     console.error('Return error:', e.response?.data || e.message);
-  //   }
-  // };
-
-  // const handleReturn = async (id: number) => {
-  //   console.log('PATCH loan return:', {
-  //     id,
-  //     token: user.token,
-  //   });
-  //   try {
-  //     const r = await api.patch(`loans/${id}/return`, null, {
-  //       headers: {
-  //         Authorization: `Bearer ${user.token}`,
-  //         Accept: '*/*', // ⬅️ samakan dengan curl
-  //       },
-  //     });
-  //     console.log('Return response:', r);
-  //     toast.success('Book return successfully');
-  //     setLoans((prev) => prev.filter((l) => l.id !== id));
-  //   } catch (e: any) {
-  //     const msg = e?.response?.data?.message || 'Return failed';
-  //     toast.error(msg);
-  //     console.error('Return error:', e.response?.data || e.message);
-  //   }
-  // };
-
   const handleReturn = async (id: number) => {
     try {
       const response = await fetch(
@@ -137,8 +98,6 @@ export const UserBorrow = () => {
 
       if (!response.ok) {
         const errorText = await response.text();
-
-        // Coba parse JSON jika bisa
         try {
           const errorJson = JSON.parse(errorText);
           toast.error(errorJson.message || 'Return failed');

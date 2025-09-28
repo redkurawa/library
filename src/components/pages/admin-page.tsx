@@ -30,7 +30,9 @@ export const Admin = () => {
           <TabsContent value='borrowed'>
             <AdminBorrowList />
           </TabsContent>
-          <TabsContent value='user'>Change your user here.</TabsContent>
+          <TabsContent value='user'>
+            <h1 className='my-12 text-[28px] font-black'>List Register User</h1>
+          </TabsContent>
           <TabsContent value='list'>
             <AdminBookList />
           </TabsContent>
