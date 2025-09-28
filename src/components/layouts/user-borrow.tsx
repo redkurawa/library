@@ -5,8 +5,8 @@ import { GetService, PostService } from '@/services/service';
 import type { Loan } from '@/types/loans';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { Button } from '../ui/button';
 import { toast } from 'sonner';
+import { Button } from '../ui/button';
 import {
   Dialog,
   DialogClose,
@@ -18,7 +18,6 @@ import {
   DialogTrigger,
 } from '../ui/dialog';
 import { Textarea } from '../ui/textarea';
-import { api } from '@/services/api';
 
 export const UserBorrow = () => {
   // const token = useAppSelector((state) => state.auth);
