@@ -11,7 +11,7 @@ export const BookCard = ({ book }: { book: Book }) => {
     !imageError;
 
   return (
-    <div className='flex h-full flex-col shadow-all rounded-t-[12px]'>
+    <div className='flex h-[468px] flex-col shadow-all rounded-t-[12px]'>
       <div className='h-48 overflow-hidden'>
         {hasValidCover ? (
           <img
