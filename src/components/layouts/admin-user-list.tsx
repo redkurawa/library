@@ -21,8 +21,8 @@ export const AdminUserList = () => {
   useEffect(() => {
     if (!token) return;
     const getUsers = async () => {
-      const r = await GetService('admin/users?page=1&limit=10', token);
-      setUsers(r.data.users);
+      const r = await GetService('admin/users?sortBy=createdAt&order=asc', token);
+      setUsers(r.data.users || r.data);
     };
     getUsers();
   }, [token]);
