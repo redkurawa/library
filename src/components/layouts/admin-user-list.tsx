@@ -26,20 +26,28 @@ export const AdminUserList = () => {
         let page = 1;
         let hasMore = true;
 
+        console.log('Starting to fetch all users...');
+
         while (hasMore) {
-          const r = await GetService(`admin/users?sortBy=createdAt&order=asc&page=${page}&limit=10`, token);
+          const url = `admin/users?sortBy=createdAt&order=asc&page=${page}&limit=10`;
+          console.log(`Fetching: ${url}`);
+          
+          const r = await GetService(url, token);
           const userData = r.data?.users || r.data || [];
           
           console.log(`Page ${page}: fetched ${userData.length} users`);
+          console.log('Response data:', r.data);
           
           allUsers.push(...userData);
           
           // Stop if we got less than 10 users (no more pages)
           if (userData.length < 10) {
+            console.log('Less than 10 users, stopping pagination');
             hasMore = false;
           } else {
             // Try next page
             page++;
+            console.log(`Moving to page ${page}`);
             // Safety limit: max 100 pages (1000 users)
             if (page > 100) {
               console.warn('Reached max page limit');
@@ -48,7 +56,9 @@ export const AdminUserList = () => {
           }
         }
         
-        console.log('All users loaded:', allUsers.length);
+        console.log('=== All users loaded ===');
+        console.log('Total users:', allUsers.length);
+        console.log('Users:', allUsers);
         setUsers(allUsers);
       } catch (error) {
         console.error('Failed to fetch users:', error);
