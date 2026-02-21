@@ -12,7 +12,7 @@ export const BookCard = ({ book }: { book: Book }) => {
 
   return (
     <div className='flex h-[468px] flex-col shadow-all rounded-t-[12px]'>
-      <div className='h-48 overflow-hidden'>
+      <div className='h-[336px] overflow-hidden'>
         {hasValidCover ? (
           <img
             src={book.coverImage as string}
