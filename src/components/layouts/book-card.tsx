@@ -11,8 +11,8 @@ export const BookCard = ({ book }: { book: Book }) => {
     !imageError;
 
   return (
-    <div className='shadow-all rounded-t-[12px]'>
-      <div className='mb-5 h-48 overflow-hidden'>
+    <div className='flex h-full flex-col shadow-all rounded-t-[12px]'>
+      <div className='h-48 overflow-hidden'>
         {hasValidCover ? (
           <img
             src={book.coverImage as string}
@@ -38,12 +38,14 @@ export const BookCard = ({ book }: { book: Book }) => {
           </div>
         )}
       </div>
-      <div className='p-3'>
-        <p className='text-sm font-bold md:text-lg'>{book.title} </p>
-        <p className='md:text-md text-sm font-medium'>{book.author.name} </p>
+      <div className='flex flex-1 flex-col justify-between p-3'>
+        <div>
+          <p className='mb-1 line-clamp-2 text-sm font-bold md:text-lg'>{book.title}</p>
+          <p className='mb-2 line-clamp-1 text-sm font-medium md:text-md'>{book.author.name}</p>
+        </div>
         <div className='flex items-center gap-1'>
           <img src='/icons/star.svg' alt='star' />
-          <p className='md:text-md text-sm font-semibold'>{book.rating} </p>
+          <p className='text-sm font-semibold md:text-md'>{book.rating}</p>
         </div>
       </div>
     </div>
