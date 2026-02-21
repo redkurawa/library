@@ -36,6 +36,8 @@ const authSlice = createSlice({
       state.token = null;
       state.isLoading = false;
       state.error = null;
+      // Clear cart on logout
+      localStorage.removeItem('cart');
     },
   },
   extraReducers: (builder) => {

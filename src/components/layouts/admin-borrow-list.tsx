@@ -34,7 +34,7 @@ export const AdminBorrowList = () => {
       <h1 className='text-[28px] font-bold'>Borrowed List</h1>
       <div>
         {listLoans.map((list) => (
-          <div>
+          <div key={list.id}>
             <div className='shadow-all mb-5 flex gap-5 rounded-2xl p-5'>
               <div>
                 {bookCovers[list.title] && (

@@ -6,13 +6,14 @@ import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import { AdminBookList } from '../layouts/admin-book-list';
 import { AdminBorrowList } from '../layouts/admin-borrow-list';
+import { AdminUserList } from '../layouts/admin-user-list';
 
 export const Admin = () => {
   const navigate = useNavigate();
 
   const { user } = useAppSelector((state) => state.auth);
   useEffect(() => {
-    if (!user || user.id !== 1) {
+    if (!user || user.role !== 'ADMIN') {
       navigate('/');
     }
   }, [user, navigate]);
@@ -31,7 +32,7 @@ export const Admin = () => {
             <AdminBorrowList />
           </TabsContent>
           <TabsContent value='user'>
-            <h1 className='my-12 text-[28px] font-black'>List Register User</h1>
+            <AdminUserList />
           </TabsContent>
           <TabsContent value='list'>
             <AdminBookList />

@@ -7,9 +7,20 @@ interface BookCart {
   category: string;
   title: string;
   author: string;
+  coverImage?: string;
 }
 
-const initialState: BookCart[] = [];
+// Load initial state from localStorage
+const loadState = (): BookCart[] => {
+  try {
+    const saved = localStorage.getItem('cart');
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+};
+
+const initialState: BookCart[] = loadState();
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -20,12 +31,19 @@ const cartSlice = createSlice({
         (item) => item.idBook === action.payload.idBook
       );
       if (!isExist) {
-        state.push({ idCart: uuidv4(), ...action.payload });
+        const newItem = { idCart: uuidv4(), ...action.payload };
+        state.push(newItem);
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(state));
       }
     },
     removeCart: (state, action: PayloadAction<string>) => {
       const index = state.findIndex((cart) => cart.idCart === action.payload);
-      if (index !== -1) state.splice(index, 1);
+      if (index !== -1) {
+        state.splice(index, 1);
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(state));
+      }
     },
   },
 });

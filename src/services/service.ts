@@ -32,4 +32,20 @@ const PostService = async (
   }
 };
 
-export { GetService, PostService };
+const DeleteService = async (queryPath: string = '', token?: string) => {
+  try {
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const r = await api.delete(queryPath, { headers });
+    return r;
+  } catch (error: any) {
+    if (error.response) {
+      console.log('❌ Backend error:', error.response.data);
+      console.log('📄 Status:', error.response.status);
+    } else {
+      console.log('Unexpected error:', error.message);
+    }
+    throw error;
+  }
+};
+
+export { GetService, PostService, DeleteService };

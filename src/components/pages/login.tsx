@@ -33,7 +33,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (user) {
-      user.id == 1 ? navigate('/admin') : navigate('/');
+      user.id == 2 ? navigate('/admin') : navigate('/');
     }
   }, [user, navigate]);
 

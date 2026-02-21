@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/redux/hooks';
-import { Menu } from 'lucide-react';
+import { Menu, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router';
 import { Button } from '../ui/button';
 import { Logo } from '../ui/logo';
@@ -16,6 +16,7 @@ import { DropDownUserMenu } from './dropdown-user';
 
 export const Header = () => {
   const { user, token } = useAppSelector((state) => state.auth);
+  const cart = useAppSelector((state) => state.cart);
 
   return (
     <div className='h-20 border-b px-1'>
@@ -27,15 +28,27 @@ export const Header = () => {
           </div>
         </Link>
         {token ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild className='cursor-pointer'>
-              <div className='flex items-center gap-3'>
-                <img src='/icons/face.png' alt='' />
-                {user?.name}
-              </div>
-            </DropdownMenuTrigger>
-            <DropDownUserMenu />
-          </DropdownMenu>
+          <div className='flex items-center gap-4'>
+            <div className='relative'>
+              <Link to='/cart'>
+                <ShoppingCart className='h-6 w-6 cursor-pointer' />
+                {cart.length > 0 && (
+                  <span className='absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white'>
+                    {cart.length}
+                  </span>
+                )}
+              </Link>
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className='cursor-pointer'>
+                <div className='flex items-center gap-3'>
+                  <img src='/icons/face.png' alt='' />
+                  {user?.name}
+                </div>
+              </DropdownMenuTrigger>
+              <DropDownUserMenu />
+            </DropdownMenu>
+          </div>
         ) : (
           <>
             <div className='text-md hidden items-center gap-4 md:flex'>

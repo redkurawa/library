@@ -8,6 +8,7 @@ import { Admin } from './components/pages/admin-page';
 import { Toaster } from './components/ui/sonner';
 import { UserPage } from './components/pages/user-page';
 import AddBook from './components/pages/admin-add-book';
+import { CartPage } from './components/pages/cart-page';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/category' element={<BookStar />} />
           <Route path='/admin' element={<Admin />} />
           <Route path='/add' element={<AddBook />} />
+          <Route path='/cart' element={<CartPage />} />
         </Routes>
         <Toaster position='top-center' richColors />
       </div>

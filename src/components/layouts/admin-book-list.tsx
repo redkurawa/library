@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from '../ui/dialog';
 import { useRef } from 'react';
+import { CategoryManager } from './category-manager';
 
 export const AdminBookList = () => {
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -41,11 +42,14 @@ export const AdminBookList = () => {
   return (
     <div className='mt-6'>
       <h1 className='text-[28px] font-bold'>Book List</h1>
-      <Link to='/add'>
-        <Button className='my-6' variant={'secondary'} size={'md'}>
-          Add Book
-        </Button>
-      </Link>
+      <div className='my-6 flex gap-2'>
+        <Link to='/add'>
+          <Button variant={'secondary'} size={'md'}>
+            Add Book
+          </Button>
+        </Link>
+        <CategoryManager />
+      </div>
       {books.map((book) => (
         <div className='shadow-all mb-4 flex gap-4 rounded-2xl p-5'>
           <div className='w-23'>

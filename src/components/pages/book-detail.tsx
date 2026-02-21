@@ -49,7 +49,8 @@ export const BookDetail = () => {
       !detail?.id ||
       !detail?.title ||
       !detail?.author?.name ||
-      !detail?.category?.name
+      !detail?.category?.name ||
+      !detail?.coverImage
     )
       return;
     const isExist = cartItems.some((item) => item.idBook === detail?.id);
@@ -65,6 +66,7 @@ export const BookDetail = () => {
         title: detail?.title,
         author: detail?.author?.name,
         category: detail?.category?.name,
+        coverImage: detail?.coverImage,
       })
     );
 
