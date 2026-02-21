@@ -22,17 +22,28 @@ export const AdminUserList = () => {
     if (!token) return;
     const getAllUsers = async () => {
       try {
-        // Try to fetch all users with high limit
-        const r = await GetService('admin/users?sortBy=createdAt&order=asc&limit=1000', token);
-        const userData = r.data?.users || r.data || [];
-        const total = r.data?.total || userData.length;
-        const limit = r.data?.limit || 10;
+        const allUsers: UserData[] = [];
+        let page = 1;
+        let hasMore = true;
+
+        while (hasMore) {
+          const r = await GetService(`admin/users?sortBy=createdAt&order=asc&page=${page}&limit=10`, token);
+          const userData = r.data?.users || r.data || [];
+          const total = r.data?.total || userData.length;
+          
+          console.log(`Page ${page}: fetched ${userData.length} users, total: ${total}`);
+          
+          allUsers.push(...userData);
+          
+          if (userData.length < 10 || allUsers.length >= total) {
+            hasMore = false;
+          } else {
+            page++;
+          }
+        }
         
-        console.log('Total users from API:', total);
-        console.log('Limit from API:', limit);
-        console.log('Users received:', userData.length);
-        
-        setUsers(userData);
+        console.log('All users loaded:', allUsers.length);
+        setUsers(allUsers);
       } catch (error) {
         console.error('Failed to fetch users:', error);
       }
