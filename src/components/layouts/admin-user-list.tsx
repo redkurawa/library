@@ -29,16 +29,22 @@ export const AdminUserList = () => {
         while (hasMore) {
           const r = await GetService(`admin/users?sortBy=createdAt&order=asc&page=${page}&limit=10`, token);
           const userData = r.data?.users || r.data || [];
-          const total = r.data?.total || userData.length;
           
-          console.log(`Page ${page}: fetched ${userData.length} users, total: ${total}`);
+          console.log(`Page ${page}: fetched ${userData.length} users`);
           
           allUsers.push(...userData);
           
-          if (userData.length < 10 || allUsers.length >= total) {
+          // Stop if we got less than 10 users (no more pages)
+          if (userData.length < 10) {
             hasMore = false;
           } else {
+            // Try next page
             page++;
+            // Safety limit: max 100 pages (1000 users)
+            if (page > 100) {
+              console.warn('Reached max page limit');
+              hasMore = false;
+            }
           }
         }
         
