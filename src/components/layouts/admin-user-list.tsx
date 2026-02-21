@@ -20,11 +20,23 @@ export const AdminUserList = () => {
 
   useEffect(() => {
     if (!token) return;
-    const getUsers = async () => {
-      const r = await GetService('admin/users?sortBy=createdAt&order=asc', token);
-      setUsers(r.data.users || r.data);
+    const getAllUsers = async () => {
+      try {
+        const r = await GetService('admin/users?sortBy=createdAt&order=asc', token);
+        const userData = r.data?.users || r.data || [];
+        const total = r.data?.total || userData.length;
+        const limit = r.data?.limit || 10;
+        
+        console.log('Total users from API:', total);
+        console.log('Limit from API:', limit);
+        console.log('Users received:', userData.length);
+        
+        setUsers(userData);
+      } catch (error) {
+        console.error('Failed to fetch users:', error);
+      }
     };
-    getUsers();
+    getAllUsers();
   }, [token]);
 
   const filteredUsers = users.filter(
