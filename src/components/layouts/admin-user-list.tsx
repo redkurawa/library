@@ -22,7 +22,8 @@ export const AdminUserList = () => {
     if (!token) return;
     const getAllUsers = async () => {
       try {
-        const r = await GetService('admin/users?sortBy=createdAt&order=asc', token);
+        // Try to fetch all users with high limit
+        const r = await GetService('admin/users?sortBy=createdAt&order=asc&limit=1000', token);
         const userData = r.data?.users || r.data || [];
         const total = r.data?.total || userData.length;
         const limit = r.data?.limit || 10;
